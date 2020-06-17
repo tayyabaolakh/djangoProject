@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title %}
+    BoxOffice | Theatres
+{% endblock %}
+
+{% block content %}
+
+<head>
+  <script src="https://code.iconify.design/1/1.0.6/iconify.min.js"></script>
+
+  <style>
+    img {
+      border-radius: 8px;
+    }
+  </style>
+
+  <style>
+    img:hover {
+      transform: scaleX(-1);
+    }
+  </style>
+
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css"
+  />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+.checked {
+  color: orange;
+}
+</style>
+</head>
+
+ <body>
+<div class="container-fluid">
+  <div class="jumbotron">
+
+    {% for category in movie_list %}
+<hr>
+    <div class="text-center">
+      <div class="container-fluid">
+        <div class="animate__animated animate__pulse">
+         <h2 class="bg-primary" >{{ category.0.language }} MOVIES <span class=" text-danger iconify " data-icon="octicon:chevron-down" data-inline="false"></span></h2>
+       </div>
+     </div>
+   </div>
+<hr>
+<br>
+
+   <div class="container-fluid">
+
+     <div class="row">
+       {% for movie in category %}
+       <div class="col-sm-4">
+         <div class="thumbnail">
+           <br>
+           <img src="{{ movie.image.url }}" alt="{{ movie.name }}" width="100%" height="325" ></img>
+           <div class="caption">
+             <h3><a href="{% url 'movie:detail' movie.id %}">{{ movie.name }}</a></h3>
+             <p>{{ movie.cast }}</p>
+             <p>{{ movie.language }} | {{ movie.certificate }}</p>
+             <p><a class="btn btn-default" onclick="watchTrailer('{{ movie.name }}','{{ movie.trailer }}')" role="button">Watch Trailer</a>{% if user.is_authenticated %} <a class="btn btn-primary" href="{% url 'movie:detail' movie.id %}" role="button">Book Now</a>{% endif %}</p>
+             <span class="fa fa-star checked"></span>
+             <span class="fa fa-star checked"></span>
+             <span class="fa fa-star checked"></span>
+             <span class="fa fa-star checked"></span>
+             <span class="fa fa-star"></span>
+           </div>
+         </div>
+       </div>
+       {% if forloop.counter|divisibleby:3 or forloop.counter == category|length %}
+     </div>
+
+
+   {% endif %}
+   {% if forloop.counter != category|length %}
+   <div class="row">
+
+     {% endif %}
+     {% endfor %}
+   </div>
+
+   {% endfor %}
+ </div>
+</div>
+
+ <script type="text/javascript">
+   $('.carousel').carousel({
+     interval: 2500
+   });
+   function watchTrailer(windowName,url) {
+     newwindow=window.open(url,windowName,'height=700,width=700');
+     if (window.focus) {newwindow.focus()}
+     return false;
+   }
+ </script>
+
+</div>
+
+<br><br><br>
+</body>
+
+
+{% endblock %}

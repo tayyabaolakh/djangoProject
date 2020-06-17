@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<hr>
+<div class="container">
+  <div class="text-center">
+    <h1  class="bg-primary"> All Theatres</h1>
+  </div>
+</div>
+
+<hr>
+<br><br>
+
+<div class="container-fluid">
+  <div class="container">
+    {% for category in theatres %}
+    <div class="container-fluid">
+      <div class="jumbotron" id="{{ category.0.city }}-theatres" style="background-color:#FFE4B5">
+          <div class="text-center">
+              <h2><u>Theatres in {{ category.0.city }}</u></h2>
+          </div>
+          <ul>
+              {% for theatre in category %}
+
+              <li style="font-size:20px">
+              <a href="{{ theatre.get_absolute_url }}">{{ theatre.name }} | {{ theatre.address }}</a>
+              </li>
+
+              {% endfor %}
+          </ul>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}

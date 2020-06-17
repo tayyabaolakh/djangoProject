@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}
+BoxOffice | Booking
+{% endblock %}
+
+{% block content %}
+<hr>
+<div class="container">
+  <div class="text-center">
+    <h1  class="bg-primary"> My Bookings</h1>
+  </div>
+</div>
+
+
+
+<hr />
+<br /><br />
+{% if object_list %}
+<div class="container">
+  <div class="jumbotron col-sm-offset-1 col-sm-10" style="background-color:#FFE4E1">
+    <ul>
+      <font size="4">
+
+        {% for book in object_list %}
+        <li><a href="{{ book.get_absolute_url }}">{{ book }}</a></li>
+        <hr style="border: 1px solid black;" />
+        {% endfor %}
+      </font>
+    </ul>
+  </div>
+</div>
+
+
+{% else %}
+<p class="text-center lead">No Bookings to Show</p>
+{% endif %}
+
+{% endblock %}
